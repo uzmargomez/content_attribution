@@ -48,7 +48,6 @@ class MarkovAttribution:
         self.full_probability = self.db.get_probability("START", "CONVERSION")
         self.channels = self.db.unique_channels
         self.df_info = self.__get_df()
-        
 
     def __rm(self, channel):
         """
@@ -78,15 +77,11 @@ class MarkovAttribution:
             self.var_value,
             self.separator,
         )
-        removal_prob = removal_db.get_probability(
-            "START", "CONVERSION"
-        )
+        removal_prob = removal_db.get_probability("START", "CONVERSION")
         if self.full_probability == 0:
             removal_eff = 0
         else:
-            removal_eff = 1 - (
-                removal_prob / self.full_probability
-            )
+            removal_eff = 1 - (removal_prob / self.full_probability)
 
         return removal_eff
 
@@ -114,16 +109,22 @@ class MarkovAttribution:
             effect[channel] = self.__removal_effect(channel)
             cumulative += effect[channel]
         for channel in channels_temp:
-            weighted_effect_channel = effect[channel]/cumulative
-            total_conversions_channel = weighted_effect_channel * total_conversions
-            total_conversion_value_channel = weighted_effect_channel * total_value
-            
+            weighted_effect_channel = effect[channel] / cumulative
+            total_conversions_channel = (
+                weighted_effect_channel * total_conversions
+            )
+            total_conversion_value_channel = (
+                weighted_effect_channel * total_value
+            )
+
             weighted_effect_list.append(weighted_effect_channel)
             total_conversions_list.append(total_conversions_channel)
             total_conversion_value_list.append(total_conversion_value_channel)
 
-        d = {'channel_name':channels_temp,
-            'total_conversion':total_conversions_list,
-            'total_conversion_value':total_conversion_value_list}
+        d = {
+            "channel_name": channels_temp,
+            "total_conversion": total_conversions_list,
+            "total_conversion_value": total_conversion_value_list,
+        }
 
-        return pd.DataFrame(data = d)
+        return pd.DataFrame(data=d)

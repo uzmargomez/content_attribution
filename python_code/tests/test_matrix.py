@@ -2,19 +2,24 @@ import unittest
 from numpy import matrix, array_equal, allclose
 from markov_attribution import MarkovMatrix
 
-test_values = [[1,0,0,0,0],
-           [1/2,0,1/2,0,0],
-           [0,1/2,0,1/2,0],
-           [0,0,1/2,0,1/2],
-           [0,0,0,0,1]]
+test_values = [
+    [1, 0, 0, 0, 0],
+    [1 / 2, 0, 1 / 2, 0, 0],
+    [0, 1 / 2, 0, 1 / 2, 0],
+    [0, 0, 1 / 2, 0, 1 / 2],
+    [0, 0, 0, 0, 1],
+]
+
 
 class TestMarkovMatrix(unittest.TestCase):
     def standard_form(self):
-        comp_values = [[0,1/2,0,1/2,0],
-                       [1/2,0,1/2,0,0],
-                       [0,1/2,0,0,1/2],
-                       [0,0,0,1,0],
-                       [0,0,0,0,1]]
+        comp_values = [
+            [0, 1 / 2, 0, 1 / 2, 0],
+            [1 / 2, 0, 1 / 2, 0, 0],
+            [0, 1 / 2, 0, 0, 1 / 2],
+            [0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 1],
+        ]
         comp = matrix(comp_values)
         test_matrix = MarkovMatrix(test_values)
         test = test_matrix.standard_matrix
@@ -23,11 +28,7 @@ class TestMarkovMatrix(unittest.TestCase):
         self.assertTrue(array_equal(comp, test))
 
     def test_q(self):
-        comp_values = [
-            [0,1/2,0],
-            [1/2,0,1/2],
-            [0,1/2,0]
-        ]
+        comp_values = [[0, 1 / 2, 0], [1 / 2, 0, 1 / 2], [0, 1 / 2, 0]]
         comp = matrix(comp_values)
         test_matrix = MarkovMatrix(test_values)
         test = test_matrix.q
@@ -36,11 +37,7 @@ class TestMarkovMatrix(unittest.TestCase):
         self.assertTrue(array_equal(comp, test))
 
     def test_n(self):
-        comp_values = [
-            [3/2,1,1/2],
-            [1,2,1],
-            [1/2,1,3/2]
-        ]
+        comp_values = [[3 / 2, 1, 1 / 2], [1, 2, 1], [1 / 2, 1, 3 / 2]]
         comp = matrix(comp_values)
         test_matrix = MarkovMatrix(test_values)
         test = test_matrix.n
@@ -49,11 +46,7 @@ class TestMarkovMatrix(unittest.TestCase):
         self.assertTrue(allclose(comp, test))
 
     def test_r(self):
-        comp_values = [
-            [1/2,0],
-            [0,0],
-            [0,1/2]
-        ]
+        comp_values = [[1 / 2, 0], [0, 0], [0, 1 / 2]]
         comp = matrix(comp_values)
         test_matrix = MarkovMatrix(test_values)
         test = test_matrix.r
@@ -62,11 +55,7 @@ class TestMarkovMatrix(unittest.TestCase):
         self.assertTrue(array_equal(comp, test))
 
     def test_m(self):
-        comp_values = [
-            [3/4, 1/4],
-            [1/2, 1/2],
-            [1/4, 3/4]
-        ]
+        comp_values = [[3 / 4, 1 / 4], [1 / 2, 1 / 2], [1 / 4, 3 / 4]]
         comp = matrix(comp_values)
         test_matrix = MarkovMatrix(test_values)
         test = test_matrix.m
@@ -84,7 +73,8 @@ class TestMarkovMatrix(unittest.TestCase):
         test_matrix = MarkovMatrix(test_values)
         test = test_matrix.get_probability(1, 0)
         print(test)
-        self.assertTrue(test == 3/4)
+        self.assertTrue(test == 3 / 4)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

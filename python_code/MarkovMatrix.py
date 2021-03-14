@@ -125,7 +125,7 @@ class MarkovMatrix:
                 for i in self.transient_states
                 for j in self.absorption_states
             ]
-            
+
             prob = dict(zip(elements, self.m.flatten().tolist()))
 
             return prob[(transient_state, absorbing_state)]
