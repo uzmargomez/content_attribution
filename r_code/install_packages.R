@@ -1,0 +1,6 @@
+install.packages('bigrquery')
+install.packages('httpuv')
+install.packages('ChannelAttribution')
+install.packages('RGA')
+install.packages('timeDate')
+install.packages('stringr')
